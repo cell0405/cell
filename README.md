@@ -6,10 +6,10 @@
 - `cell/Problem2.java` - 最大子数组和算法
 - `cell/Problem3.java` - 素数查找
 
-- `cell/A1-1.java`
-- `cell/A1-2.java`
-- `cell/A1-3.java`
-- `cell/A1-4.java`
+- `cell/A1-1`
+- `cell/A1-2`
+- `cell/A1-3`
+- `cell/A1-4`
 
 ## 运行方法
 ```bash
