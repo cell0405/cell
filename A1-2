@@ -1,0 +1,28 @@
+class Building {
+    String name;
+    Building(String name){ this.name = name; }
+}
+
+class Course {
+    String name;
+    Building building;   // 必须属于某个 Building
+
+    Course(String name, Building building){
+        this.name = name;
+        this.building = building;
+    }
+}
+
+class College {
+    String name;
+    Building building;   // 聚合（College 使用某 Building）
+
+    College(String name, Building building){
+        this.name = name;
+        this.building = building;
+    }
+
+    Course createCourse(String name){
+        return new Course(name, building); // 组合关系：College 创建 Course
+    }
+}
