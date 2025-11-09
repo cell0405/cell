@@ -1,0 +1,74 @@
+import java.util.*;
+
+enum OrderStatus { CREATE, PAID, SHIPPING, DELIVERED, CANCEL }
+
+class Customer {
+    private String name, contact, deliveryAddress;
+    private boolean active;
+    private List<Order> orders = new ArrayList<>();
+    public Customer(String n, String c, String addr, boolean a){
+        name=n; contact=c; deliveryAddress=addr; active=a;
+    }
+    public void addOrder(Order o){ orders.add(o); }
+    public List<Order> getOrders(){ return Collections.unmodifiableList(orders); }
+}
+
+class Product {
+    private String title, description;
+    private double weight, price;
+    public Product(String t,double p,double w,String d){ title=t; price=p; weight=w; description=d;}
+    public double getPriceForQuantity(int q){ return price*q; }
+    public double getWeight(){ return weight; }
+}
+
+class OrderDetail {
+    private Product product;
+    private int quantity;
+    public OrderDetail(Product p,int q){ product=p; quantity=q; }
+    public double calculateSubTotal(){ return product.getPriceForQuantity(quantity); }
+    public double calculateWeight(){ return product.getWeight()*quantity; }
+    public Product getProduct(){ return product; }
+}
+
+class Order {
+    private Date createDate;
+    private OrderStatus status;
+    private List<OrderDetail> details = new ArrayList<>();
+    private Payment payment;
+    public Order(){ createDate=new Date(); status=OrderStatus.CREATE; }
+    public void addDetail(OrderDetail d){ details.add(d); }
+    public double calculateTotal(){ return details.stream().mapToDouble(OrderDetail::calculateSubTotal).sum(); }
+    public void setPayment(Payment p){ payment=p; status = (p!=null ? OrderStatus.PAID : status); }
+    public OrderStatus getStatus(){ return status; }
+}
+
+abstract class Payment {
+    private double amount;
+    protected Payment(double amount){ this.amount=amount; }
+    public double getAmount(){ return amount; }
+}
+
+class Credit extends Payment {
+    private String number,type; private Date expireDate;
+    public Credit(double a,String num,String t,Date e){ super(a); number=num; type=t; expireDate=e;}
+}
+
+class Cash extends Payment {
+    private double cashTendered;
+    public Cash(double a,double tendered){ super(a); cashTendered=tendered; }
+}
+
+class WireTransfer extends Payment {
+    private String bankID,bankName;
+    public WireTransfer(double a,String id,String name){ super(a); bankID=id; bankName=name; }
+}
+
+class AliPay extends Payment {
+    private String number;
+    public AliPay(double a,String num){ super(a); number=num; }
+}
+
+class WeixinPay extends Payment {
+    private String number;
+    public WeixinPay(double a,String num){ super(a); number=num; }
+}
