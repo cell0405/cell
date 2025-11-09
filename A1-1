@@ -1,0 +1,25 @@
+import java.time.Year;
+
+public class Thoroughbred {
+    private String mother;
+    private String father;
+    private int birthYear;
+
+    public Thoroughbred(String mother, String father, int birthYear) {
+        this.mother = mother;
+        this.father = father;
+        this.birthYear = birthYear;
+    }
+
+    public int getCurrentAge() {
+        return Math.max(0, Year.now().getValue() - birthYear);
+    }
+
+    public String getFather() {
+        return father;
+    }
+
+    public String getMother() {
+        return mother;
+    }
+}
