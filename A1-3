@@ -1,0 +1,42 @@
+import java.util.*;
+
+class School {
+    String name;
+    List<Department> departments = new ArrayList<>();
+    School(String name){ this.name = name; }
+    void addDept(Department d){ departments.add(d); }
+}
+
+class Department {
+    String name;
+    List<Instructor> instructors = new ArrayList<>();
+    List<Subject> subjects = new ArrayList<>();
+    Department(String name){ this.name = name; }
+    void addInstructor(Instructor i){ instructors.add(i); }
+    void addSubject(Subject s){ subjects.add(s); }
+}
+
+class Instructor {
+    String name;
+    List<Subject> teaches = new ArrayList<>(); // 1..3 (enforced on assign)
+    Instructor(String name){ this.name = name; }
+    void assign(Subject s){
+        if(teaches.size() >= 3) throw new IllegalStateException("最多教3门课");
+        teaches.add(s);
+    }
+}
+
+class Subject {
+    String code, title;
+    Subject(String code, String title){ this.code = code; this.title = title; }
+}
+
+class Student {
+    String name;
+    List<Subject> enrolled = new ArrayList<>(); // 1..5 (enforced on enroll)
+    Student(String name){ this.name = name; }
+    void enroll(Subject s){
+        if(enrolled.size() >= 5) throw new IllegalStateException("最多选5门课");
+        enrolled.add(s);
+    }
+}
